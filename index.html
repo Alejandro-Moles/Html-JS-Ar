@@ -12,11 +12,8 @@
   </head>
 
   <body style="margin: 0; overflow: hidden;">
-    <a-scene
-      vr-mode-ui="enabled: false"
-      embedded
-      arjs="sourceType: webcam; debugUIEnabled: false;"
-    >
+    <a-scene vr-mode-ui='enabled: false' embedded arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
+      <a-camera gps-camera rotation-reader></a-camera>
       <!--
       <a-entity gps-entity-place="latitude: 37.192052844717004; longitude: -3.6170695926301373;" gltf-model="./assets/magnemite/scene.gltf" rotation="0 180 0" animation-mixer scale="0.15 0.15 0.15"/>
       <a-entity gps-entity-place="latitude: 37.19201652107013; longitude:  -3.6172747816071293;" gltf-model="./assets/articuno/scene.gltf" rotation="0 180 0" animation-mixer scale="0.15 0.15 0.15"/>
@@ -25,4 +22,60 @@
       -->
     </a-scene>
   </body>
+  
+    <script src="modelosARJS.js"></script>
+  <script>
+  
+    window.onload = ()=>
+    {
+        cargarModelos();
+    }
+
+    function cargarModelos(){
+        var modelos = [
+            {
+                latitud: 37.192249,
+                longitud: -3.616615,
+                color: "yellow",
+                coso: "a-box"
+            },
+            {
+                latitud: 37.192246, 
+                longitud: -3.616596,
+                color: "red",
+                coso: "a-cylinder"
+            },
+            {
+                latitud: 37.192262,
+                longitud: -3.616535,
+                color: "blue",
+                coso: "a-octahedron"
+            },
+            {
+                latitud: 37.192196, 
+                longitud: -3.616572,
+                color: "pink",
+                coso: "a-triangle"
+            },
+            {
+                latitud: 37.192235, 
+                longitud: -3.616582,
+                color: "white",
+                coso: "a-sphere"
+            }
+        ];
+
+        
+        for (var i = 0; i < modelos.length; i++){
+            var modelo = document.createElement(modelos[i].coso);
+            modelo.setAttribute('material', 'color:' + modelos[i].color);
+            modelo.setAttribute('scale', '0.5 0.5 0.5');
+            modelo.setAttribute('gps-entity-place', `latitude: ${modelos[i].latitud}; longitude: ${modelos[i].longitud};`);
+
+            var scene = document.querySelector('a-scene');
+            scene.appendChild(modelo);
+        }
+    }
+  
+  </script>
 </html>
